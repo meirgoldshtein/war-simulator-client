@@ -1,0 +1,87 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
+ 
+ .App{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: rgb(206, 200, 200);
+ }
+ 
+ .nav-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10%;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: rgb(131, 95, 95);
+ }
+ 
+ .nav-item{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+  height: 70%;
+  border-radius: 10px;
+  padding: 0.3rem;
+  background-color: rgb(220, 209, 209);
+  cursor: pointer;
+  color: rgb(24, 35, 34);
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-decoration: none;
+  
+  }
+ 
+  .body{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   min-height: 85vh;
+   width: 95%;
+
+ }
+ 
+ .login, .register, .control, .store{
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   height: 80%;
+   width: 55%;
+   background-color: rgb(227, 223, 223);
+   border-radius: 10px;
+   padding: 0.5rem;
+ }
+ 
+ input{
+   width: 70%;
+   border-radius: 10px;
+   padding: 0.2rem;
+   font-size: 0.5rem;
+   font-weight: 300;
+   background-color: rgb(225, 225, 186);
+   margin: 0.5rem;
+   font-size: 1rem;
+   font-weight: 300;
+ }
+ 
+ button{
+   width: 30%;
+   border-radius: 10px;
+   padding: 0.5rem;
+   font-size: 1.5rem;
+   font-weight: 300;
+   background-color: rgb(113, 123, 237);
+   margin: 0.5rem;
+ }
