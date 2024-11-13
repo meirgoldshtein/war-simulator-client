@@ -54,7 +54,7 @@ const fetchCandidates = createAsyncThunk('candidates/getList',
 
 
 const candidateSlice = createSlice({
-    name: 'candidate',
+    name: 'attacks',
     initialState: initialData,
     reducers: {
         updateCandidates: (state, action) => {
