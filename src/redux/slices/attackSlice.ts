@@ -4,6 +4,7 @@ import { dataStatus } from "../../types/redux"
 import candidateState from "../../types/attackState";
 import { IAttack } from "../../types/attack";
 import attackState from "../../types/attackState";
+import { useSelector } from "react-redux";
 
 
 const initialData: attackState = {
@@ -12,16 +13,16 @@ const initialData: attackState = {
     attacks: []
 }
 
-const fetchCandidates = createAsyncThunk('candidates/getList',
+const fetchAttacks = createAsyncThunk('candidates/getList',
     async (_, thunkAPI) => {
         try {
-            const response = await fetch('http://localhost:3000/api/candidates', {
+            const response = await fetch('http://localhost:3000/api/attack', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': localStorage.getItem('token') as string
                 }
-            }) 
+            })
             if (!response.ok) {
                 return thunkAPI.rejectWithValue("Couldn't get candidates Please try again")
             }
@@ -32,16 +33,26 @@ const fetchCandidates = createAsyncThunk('candidates/getList',
         }
     })
 
-    const voteForCandidate = createAsyncThunk('candidates/vote',
-    async (id: string, thunkAPI) => {
+const launchAttack = createAsyncThunk('candidates/vote',
+    async (attack: { name: string, location: string }, thunkAPI) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/candidates/vote/${id}`, {
+            const state : any = thunkAPI.getState();
+            const organization = state.user.user.organization ;
+            
+            const payload = {
+                rocket: attack.name,
+                launchTime: new Date(),
+                orgSrc: organization,
+                distLocation: attack.location
+            }
+            const response = await fetch(`http://localhost:3000/api/attack/launch`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': localStorage.getItem('token') as string
-                }
-            }) 
+                },
+                body: JSON.stringify(payload)
+            })
             if (!response.ok) {
                 return thunkAPI.rejectWithValue("Couldn't vote Please try again")
             }
@@ -53,29 +64,36 @@ const fetchCandidates = createAsyncThunk('candidates/getList',
     })
 
 
-const candidateSlice = createSlice({
+const attackSlice = createSlice({
     name: 'attacks',
     initialState: initialData,
     reducers: {
-        updateCandidates: (state, action) => {
-             state.attacks = action.payload
-             }
+
     },
-    extraReducers: (builder: ActionReducerMapBuilder<candidateState>) => { 
-        builder.addCase(fetchCandidates.pending, (state) => {
-             state.status = dataStatus.LOADING 
-             state.error = null
-        }).addCase(fetchCandidates.fulfilled, (state, action) => {
+    extraReducers: (builder: ActionReducerMapBuilder<candidateState>) => {
+        builder.addCase(fetchAttacks.pending, (state) => {
+            state.status = dataStatus.LOADING
+            state.error = null
+        }).addCase(fetchAttacks.fulfilled, (state, action) => {
             state.attacks = action.payload as unknown as IAttack[]
             state.error = null
             state.status = dataStatus.SUCCESS
-        }).addCase(fetchCandidates.rejected, (state, action) => {
+        }).addCase(fetchAttacks.rejected, (state, action) => {
             state.error = action.error as string
             state.attacks = []
             state.status = dataStatus.FAILED
+        }).addCase(launchAttack.fulfilled, (state) => {
+            state.error = null
+            state.status = dataStatus.SUCCESS
+        }).addCase(launchAttack.rejected, (state, action) => {
+            state.error = action.error as string
+            state.status = dataStatus.FAILED
+        }).addCase(launchAttack.pending, (state) => {
+            state.error = null
+            state.status = dataStatus.LOADING
         })
     }
 })
-export const { updateCandidates } = candidateSlice.actions
-export { fetchCandidates, voteForCandidate }
-export default candidateSlice
+export const { } = attackSlice.actions
+export { fetchAttacks, launchAttack }
+export default attackSlice
