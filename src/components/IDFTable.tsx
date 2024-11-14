@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { useAppDispatch } from '../redux/store'
-import { fetchAttacks } from '../redux/slices/attackSlice'
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../redux/store';
+import { fetchAttacks } from '../redux/slices/attackSlice';
 import { CountdownTimer } from './Timer';
-
 interface Attack {
     rocket: string;
     timeToHit: number;
@@ -11,8 +10,8 @@ interface Attack {
     status: string;
     _id: string
 }
-
-export default function TableControl() {
+export default function IDFTable() {
+  
     const attacks = useSelector((state: any) => state.attacks)
     const dispatch = useAppDispatch()
     useEffect(() => {

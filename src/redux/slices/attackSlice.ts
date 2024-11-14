@@ -5,6 +5,8 @@ import candidateState from "../../types/attackState";
 import { IAttack } from "../../types/attack";
 import attackState from "../../types/attackState";
 import { useSelector } from "react-redux";
+import { socket } from "../../App";
+
 
 
 const initialData: attackState = {
@@ -36,6 +38,7 @@ const fetchAttacks = createAsyncThunk('candidates/getList',
 const launchAttack = createAsyncThunk('candidates/vote',
     async (attack: { name: string, location: string }, thunkAPI) => {
         try {
+            socket.emit('newLaunch', attack);
             const state : any = thunkAPI.getState();
             const organization = state.user.user.organization ;
             
@@ -62,12 +65,45 @@ const launchAttack = createAsyncThunk('candidates/vote',
             return thunkAPI.rejectWithValue('something went wrong')
         }
     })
+   export const updateAttack = createAsyncThunk('',
+        async (attack: { id: string, status: string }, thunkAPI) => {
+            try {
+      console.log(attack)
+                const response = await fetch(`http://localhost:3000/api/attack/update`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': localStorage.getItem('token') as string
+                    },
+                    body: JSON.stringify({
+                        id: attack.id,
+                        status: attack.status
+                    })
+                })
+                if (!response.ok) {
+                    return thunkAPI.rejectWithValue("Couldn't vote Please try again")
+                }
+                const data = await response.json()
+                return data
+            } catch (error) {
+                return thunkAPI.rejectWithValue('something went wrong')
+            }
+        })
 
 
 const attackSlice = createSlice({
     name: 'attacks',
     initialState: initialData,
     reducers: {
+        updateInterceptFromSocket: (state, action) => {
+            const attack = state.attacks?.find(attack => attack._id === action.payload._id)
+            if (attack) {
+                attack.status = action.payload.status
+            }
+        },
+        addAttackFromSocket: (state, action) => {
+            state.attacks?.push(action.payload)
+        }
 
     },
     extraReducers: (builder: ActionReducerMapBuilder<candidateState>) => {
@@ -75,7 +111,7 @@ const attackSlice = createSlice({
             state.status = dataStatus.LOADING
             state.error = null
         }).addCase(fetchAttacks.fulfilled, (state, action) => {
-            state.attacks = action.payload as unknown as IAttack[]
+            state.attacks = action.payload.data as unknown as IAttack[]
             state.error = null
             state.status = dataStatus.SUCCESS
         }).addCase(fetchAttacks.rejected, (state, action) => {
@@ -91,9 +127,18 @@ const attackSlice = createSlice({
         }).addCase(launchAttack.pending, (state) => {
             state.error = null
             state.status = dataStatus.LOADING
+        }).addCase(updateAttack.fulfilled, (state) => {
+            state.error = null
+            state.status = dataStatus.SUCCESS
+        }).addCase(updateAttack.rejected, (state, action) => {
+            state.error = action.error as string
+            state.status = dataStatus.FAILED
+        }).addCase(updateAttack.pending, (state) => {
+            state.error = null
+            state.status = dataStatus.LOADING
         })
     }
 })
-export const { } = attackSlice.actions
+export const { updateInterceptFromSocket, addAttackFromSocket } = attackSlice.actions
 export { fetchAttacks, launchAttack }
 export default attackSlice

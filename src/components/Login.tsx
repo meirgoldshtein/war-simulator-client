@@ -16,7 +16,7 @@ export default function Login() {
     useEffect(() => {
       console.log(user)
       if(user.user){
-        navigat('/control')
+        navigat('/idf/control')
       }
     },[user])
   return (

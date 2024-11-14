@@ -126,6 +126,8 @@ border-radius: 10px;
     font-weight: 800;
     background-color: rgb(240, 18, 78);
     margin: 0.5rem;
+    padding: 0.5rem;
+    text-align: center;
   }
   .ammo-card{
     display: flex;
@@ -137,4 +139,45 @@ border-radius: 10px;
     background-color: rgb(170, 100, 100);
     border-radius: 10px;
     cursor: pointer;
+  }
+
+  .TableControl{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    height: 80%;
+    width: 100%;
+    background-color: rgb(227, 223, 223);
+    border-radius: 10px;
+  }
+  .titles{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  text-align: center;
+  border: 1px solid black;
+  }
+  .titles h2{
+    width: 33.3%;
+    border: 1px solid black;
+  }
+  .detailes{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    text-align: center;
+    width: 100%;
+  }
+  .attack-row
+  {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    text-align: center;
+    border: 1px solid black;
+  }
+  .detailes h3{
+    width: 33.3%;
+    border: 1px solid black;
   }
