@@ -17,7 +17,7 @@ export default function IdfControl() {
     <div className='TerrorControl'>
       <h1>TerrorControl</h1>
       <IDFAmmoBar/>
-      <IDFTable/>
+      
     </div>
   )
 }

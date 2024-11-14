@@ -9,10 +9,10 @@ export default function TerrorControl() {
   const navigate = useNavigate()
   useEffect(() => {
     if (role === 'IDF') {
-      console.log("navigate to idf control")
+
       navigate('/idf/control')}
   }, [role])
-  console.log(role)
+
   return (
     <div className='TerrorControl'>
       <h1>TerrorControl</h1>

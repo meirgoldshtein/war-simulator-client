@@ -22,7 +22,7 @@ export const fetchOrganizations = createAsyncThunk('candidates/getList',
                 return thunkAPI.rejectWithValue("Couldn't get organizations Please try again")
             }
             const data = await response.json()
-            console.log(data)
+
             return data
         } catch (error) {
             return thunkAPI.rejectWithValue('something went wrong')

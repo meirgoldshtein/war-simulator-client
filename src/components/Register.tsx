@@ -37,7 +37,7 @@ export default function Register() {
         alert("Please fill all the fields")
         return
       } 
-      console.log(username, password, organizationID)
+
       dispatch(fetchRegister({ username, password, orgId:organizationID}));
     }
   return (

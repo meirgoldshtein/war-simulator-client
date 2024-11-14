@@ -14,7 +14,7 @@ export default function Login() {
         dispatch(fetchLogin({ username, password }))
     }
     useEffect(() => {
-      console.log(user)
+
       if(user.user){
         navigat('/idf/control')
       }

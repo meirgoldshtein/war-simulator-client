@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../redux/store';
-import { fetchAttacks } from '../redux/slices/attackSlice';
+import { fetchAttacks, launchDefense } from '../redux/slices/attackSlice';
 import { CountdownTimer } from './Timer';
 interface Attack {
     rocket: string;
@@ -10,7 +10,10 @@ interface Attack {
     status: string;
     _id: string
 }
-export default function IDFTable() {
+interface IDFTableProps {
+    ammoName: string
+}
+export default function IDFTable(ammoInfo: IDFTableProps) {
   
     const attacks = useSelector((state: any) => state.attacks)
     const dispatch = useAppDispatch()
@@ -18,10 +21,17 @@ export default function IDFTable() {
         dispatch(fetchAttacks())
         const refreshInterval = setInterval(() => {
             dispatch(fetchAttacks())
-        }, 30000);
+        }, 500);
 
         return () => clearInterval(refreshInterval);
     }, []);
+
+    const [target, setTarget] = useState('')
+    const lounchBtn = async () => {
+        await dispatch(launchDefense({ammo_id:target, DefName:ammoInfo.ammoName}))
+        dispatch(fetchAttacks())
+
+    }
 
     return (
         <div className='TableControl'>
@@ -44,7 +54,16 @@ export default function IDFTable() {
                         ) : (
                             <h3>{"0m"}</h3>
                         )}
-                        <h3>{item.status}</h3>
+                        {
+                            item.status === 'LAUNCHED' ? (
+                                <button onClick={
+                                    () =>{setTarget(item._id)
+                                        lounchBtn()
+                                    }}>יירט</button>
+                            ) : (
+                                <h3>{item.status}</h3>
+                            )
+                        }
                     </div>
                 ))}
             </div>

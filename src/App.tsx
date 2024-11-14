@@ -9,6 +9,8 @@ import TerrorControl from './pages/TerrorControl'
 import { useAppDispatch } from './redux/store'
 import { addAttackFromSocket, updateInterceptFromSocket } from './redux/slices/attackSlice'
 import IdfControl from './pages/IdfControl';
+import Logout from './components/Logout';
+import Home from './components/Home';
 
 export const socket = io('http://localhost:3000');
 
@@ -18,16 +20,15 @@ function App() {
   useEffect(() => {
     socket.emit("authenticate", localStorage.getItem("token") as string);
     socket.on('auth_error', (messege: any) => {
-      console.log(messege)
+
     })
     socket.on('joined_room', (room: any) => {
-      console.log(`Joined room ${room}`)
+
     })
     socket.on('intercept', (attack: any) => {
       dispatch(updateInterceptFromSocket(attack));
     });
     socket.on('newLaunch', (attack: any) => {
-      console.log("from socket", attack)
       dispatch(addAttackFromSocket(attack));
     })
   }, []);
@@ -37,10 +38,12 @@ function App() {
       <NavBar />
       <div className="body">
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="terror/control" element={<TerrorControl />} />
           <Route path="idf/control" element={<IdfControl />} />
+          <Route path="logout" element={<Logout />} />
         </Routes>
       </div>
     </div>

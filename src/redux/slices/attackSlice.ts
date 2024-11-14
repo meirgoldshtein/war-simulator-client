@@ -15,7 +15,7 @@ const initialData: attackState = {
     attacks: []
 }
 
-const fetchAttacks = createAsyncThunk('candidates/getList',
+const fetchAttacks = createAsyncThunk('',
     async (_, thunkAPI) => {
         try {
             const response = await fetch('http://localhost:3000/api/attack', {
@@ -35,7 +35,7 @@ const fetchAttacks = createAsyncThunk('candidates/getList',
         }
     })
 
-const launchAttack = createAsyncThunk('candidates/vote',
+const launchAttack = createAsyncThunk('dfgd/bd',
     async (attack: { name: string, location: string }, thunkAPI) => {
         try {
             socket.emit('newLaunch', attack);
@@ -56,19 +56,22 @@ const launchAttack = createAsyncThunk('candidates/vote',
                 },
                 body: JSON.stringify(payload)
             })
+          
             if (!response.ok) {
                 return thunkAPI.rejectWithValue("Couldn't vote Please try again")
             }
             const data = await response.json()
             return data
         } catch (error) {
+          
             return thunkAPI.rejectWithValue('something went wrong')
         }
     })
-   export const updateAttack = createAsyncThunk('',
+
+   export const updateAttack = createAsyncThunk('ddfh/dfdf',
         async (attack: { id: string, status: string }, thunkAPI) => {
             try {
-      console.log(attack)
+
                 const response = await fetch(`http://localhost:3000/api/attack/update`, {
                     method: 'PATCH',
                     headers: {
@@ -90,6 +93,35 @@ const launchAttack = createAsyncThunk('candidates/vote',
             }
         })
 
+export const launchDefense = createAsyncThunk('sfgd/fgd',
+    async (attack:{ ammo_id: string, DefName: string}, thunkAPI) => {
+        try {
+
+
+
+            const response = await fetch(`http://localhost:3000/api/attack/intercept`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token') as string
+                },
+                body: JSON.stringify({
+                    ammo_id: attack.ammo_id,
+                    DefName: attack.DefName
+                })
+            })
+            if (!response.ok) {
+                return thunkAPI.rejectWithValue("Couldn't vote Please try again")
+            }
+
+            const data = await response.json()
+
+            return data
+        } catch (error) {
+            console.log(error)
+            return thunkAPI.rejectWithValue('something went wrong')
+        }
+    })  
 
 const attackSlice = createSlice({
     name: 'attacks',
@@ -134,6 +166,15 @@ const attackSlice = createSlice({
             state.error = action.error as string
             state.status = dataStatus.FAILED
         }).addCase(updateAttack.pending, (state) => {
+            state.error = null
+            state.status = dataStatus.LOADING
+        }).addCase(launchDefense.fulfilled, (state) => {
+            state.error = null
+            state.status = dataStatus.SUCCESS
+        }).addCase(launchDefense.rejected, (state, action) => {
+            state.error = action.error as string
+            state.status = dataStatus.FAILED
+        }).addCase(launchDefense.pending, (state) => {
             state.error = null
             state.status = dataStatus.LOADING
         })

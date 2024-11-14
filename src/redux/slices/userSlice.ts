@@ -47,7 +47,7 @@ const fetchRegister = createAsyncThunk('user/register',
                 return thunkAPI.rejectWithValue("Couldn't login Please try again")
             }
             const data = await response.json()
-            console.log(data)
+  
             return data
         } catch (error) {
             console.log(error)
