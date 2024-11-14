@@ -45,10 +45,12 @@
  
   .body{
    display: flex;
-   justify-content: center;
+   flex-direction: column;
+   justify-content: start;
    align-items: center;
    min-height: 85vh;
    width: 95%;
+
 
  }
  
@@ -62,6 +64,7 @@
    background-color: rgb(227, 223, 223);
    border-radius: 10px;
    padding: 0.5rem;
+   margin-top: 10%;
  }
  
  input{
@@ -85,3 +88,53 @@
    background-color: rgb(113, 123, 237);
    margin: 0.5rem;
  }
+
+ .TerrorControl{
+display: flex;
+flex-direction: column;
+justify-content: start;
+align-items: center;
+height: 100%;
+width: 100%;
+background-color: rgb(227, 223, 223);
+border-radius: 10px;
+}
+.AmmoBar{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+  width: 100%;
+  background-color: rgb(227, 223, 223);
+  border-radius: 10px;
+}
+.cards{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 80%;
+  width: 100%;
+  background-color: rgb(227, 223, 223);
+  border-radius: 10px;}
+  .launchBtn{
+    width: 60%;
+    border-radius: 10px;
+    /* padding: 0.5rem; */
+    font-size: 0.8rem;
+    font-weight: 800;
+    background-color: rgb(240, 18, 78);
+    margin: 0.5rem;
+  }
+  .ammo-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    width: 20%;
+    background-color: rgb(170, 100, 100);
+    border-radius: 10px;
+    cursor: pointer;
+  }

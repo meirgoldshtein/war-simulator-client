@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../redux/store';
 import { fetchOrganizations } from '../redux/slices/organinationSlice';
+import { fetchRegister } from '../redux/slices/userSlice';
 
 export default function Register() {
     const [username, setUsername] = useState('');
@@ -15,7 +16,7 @@ export default function Register() {
 
     useEffect(() => {
       dispatch(fetchOrganizations());
-    }, [dispatch])
+    }, [])
 
     useEffect(() => {
       setFilteredOrganizations(
@@ -31,6 +32,14 @@ export default function Register() {
       );
     }, [organizations, role])
 
+    const handleSubmit = () => {
+      if(!username || !password || !organizationID){
+        alert("Please fill all the fields")
+        return
+      } 
+      console.log(username, password, organizationID)
+      dispatch(fetchRegister({ username, password, orgId:organizationID}));
+    }
   return (
     <div className='register'>
       <h1>Register</h1>
@@ -50,9 +59,9 @@ export default function Register() {
       ) : (
         <p>Loading organizations...</p>
       )}
-      <input type="text" placeholder='Username' />
-      <input type="password" placeholder='Password' />
-      <button>Confirm</button>
+      <input type="text" placeholder='Username' onChange={(e) => setUsername(e.target.value)} />
+      <input type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
+      <button onClick={handleSubmit}>Confirm</button>
       <Link to='/login'>Already have an account? connect</Link>
     </div>
     )

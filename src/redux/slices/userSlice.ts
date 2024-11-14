@@ -34,7 +34,7 @@ const fetchLogin = createAsyncThunk('user/login',
     })
 
 const fetchRegister = createAsyncThunk('user/register',
-    async (user: { username: string, password: string, orgId: string }, thunkAPI) => {
+    async (user: { username: string, password: string, orgId: string}, thunkAPI) => {
         try {
             const response = await fetch('http://localhost:3000/api/users/register', {
                 method: 'POST',
@@ -47,8 +47,10 @@ const fetchRegister = createAsyncThunk('user/register',
                 return thunkAPI.rejectWithValue("Couldn't login Please try again")
             }
             const data = await response.json()
+            console.log(data)
             return data
         } catch (error) {
+            console.log(error)
             return thunkAPI.rejectWithValue('something went wrong')
         }
 
