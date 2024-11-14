@@ -2,18 +2,16 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../redux/store'
 import { fetchAttacks } from '../redux/slices/attackSlice'
+import IDFTable from './IDFTable'
 
 export default function IDFAmmoBar() {
     const user = useSelector((state: any) => state.user.user)
 
     const dispatch = useAppDispatch()
     const [ammo, setAmmo] = useState('')
-    const lounchBtn = async () => {
-        // await dispatch(launchDefense({name:ammo, location}))
-        dispatch(fetchAttacks())
-        console.log("intercepted")
-    }
+
     return (
+        <>
         <div className='AmmoBar'>
             <h3>Available Ammo</h3>
             <h3>{user?.organization}</h3>
@@ -30,10 +28,13 @@ export default function IDFAmmoBar() {
 
                 <div className="launch">
                     <p>{ammo ? ammo : "plese select an ammo"}</p>
-                    <button className='launchBtn' onClick={async () => await lounchBtn()}>יירט</button>
+                    
                 </div>
             </div>
 
         </div>
+        <IDFTable ammoName={ ammo}/>
+        </>
+
     )
 }

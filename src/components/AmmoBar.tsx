@@ -12,7 +12,7 @@ export default function AmmoBar() {
     const lounchBtn = async () => {
         await dispatch(launchAttack({name:ammo, location}))
         dispatch(fetchAttacks())
-        console.log("lounched")
+
     }
     return (
         <div className='AmmoBar'>
