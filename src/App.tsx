@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+
 import io from 'socket.io-client';
 import './App.css'
 import NavBar from './components/NavBar'
@@ -11,6 +11,7 @@ import { addAttackFromSocket, updateInterceptFromSocket } from './redux/slices/a
 import IdfControl from './pages/IdfControl';
 import Logout from './components/Logout';
 import Home from './components/Home';
+import { useEffect } from 'react';
 
 export const socket = io('http://localhost:3000');
 
