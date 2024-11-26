@@ -17,7 +17,7 @@ const URL = import.meta.env.VITE_SERVER || 'http://localhost:3000';
 export const fetchOrganizations = createAsyncThunk('candidates/getList',
     async (_, thunkAPI) => {
         try {
-            const response = await fetch(`${URL}api/organizations`)
+            const response = await fetch(`${URL}/api/organizations`)
             if (!response.ok) {
                 return thunkAPI.rejectWithValue("Couldn't get organizations Please try again")
             }
