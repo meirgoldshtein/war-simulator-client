@@ -13,7 +13,8 @@ import Logout from './components/Logout';
 import Home from './components/Home';
 import { useEffect } from 'react';
 
-export const socket = io('http://localhost:3000');
+const URL = import.meta.env.VITE_SERVER;
+export const socket = io(URL || `http://localhost:3000`);
 
 function App() {
   const dispatch = useAppDispatch()
