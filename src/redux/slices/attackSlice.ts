@@ -14,11 +14,11 @@ const initialData: attackState = {
     status: dataStatus.IDLE,
     attacks: []
 }
-
+const URL = import.meta.env.VITE_SERVER || 'http://localhost:3000';
 const fetchAttacks = createAsyncThunk('',
     async (_, thunkAPI) => {
         try {
-            const response = await fetch('http://localhost:3000/api/attack', {
+            const response = await fetch(URL, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ const launchAttack = createAsyncThunk('dfgd/bd',
                 orgSrc: organization,
                 distLocation: attack.location
             }
-            const response = await fetch(`http://localhost:3000/api/attack/launch`, {
+            const response = await fetch(`${URL}/api/attack/launch`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const launchAttack = createAsyncThunk('dfgd/bd',
         async (attack: { id: string, status: string }, thunkAPI) => {
             try {
 
-                const response = await fetch(`http://localhost:3000/api/attack/update`, {
+                const response = await fetch(`${URL}/api/attack/update`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ export const launchDefense = createAsyncThunk('sfgd/fgd',
 
 
 
-            const response = await fetch(`http://localhost:3000/api/attack/intercept`, {
+            const response = await fetch(`${URL}/api/attack/intercept`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
