@@ -16,7 +16,7 @@ const URL = import.meta.env.VITE_SERVER || 'http://localhost:3000';
 const fetchLogin = createAsyncThunk('user/login',
     async (user: { username: string, password: string }, thunkAPI) => {
         try {
-            const response = await fetch(`${URL}/api/users/login`, {
+            const response = await fetch(`${URL}api/users/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ const fetchLogin = createAsyncThunk('user/login',
 const fetchRegister = createAsyncThunk('user/register',
     async (user: { username: string, password: string, orgId: string}, thunkAPI) => {
         try {
-            const response = await fetch(`${URL}/api/users/register`, {
+            const response = await fetch(`${URL}api/users/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ const checkAuth = createAsyncThunk(
         }
 
         try {
-            const response = await fetch(`${URL}/api/users/verify`, {
+            const response = await fetch(`${URL}api/users/verify`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',        
