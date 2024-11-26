@@ -20,10 +20,10 @@ function App() {
 
   useEffect(() => {
     socket.emit("authenticate", localStorage.getItem("token") as string);
-    socket.on('auth_error', (messege: any) => {
+    socket.on('auth_error', () => {
 
     })
-    socket.on('joined_room', (room: any) => {
+    socket.on('joined_room', () => {
 
     })
     socket.on('intercept', (attack: any) => {
